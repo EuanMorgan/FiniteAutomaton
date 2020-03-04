@@ -16,7 +16,13 @@ public class App {
 		
 		
 		String filename = args[1];
-		String filename2 = args[2];
+		String filename2;
+		if(args.length == 2) {
+			filename2 = args[1];
+		}else {
+			filename2 = args[2];
+		}
+		
 		File file = new File(filename);
 		File file2 = new File(filename2);
 		
@@ -99,13 +105,17 @@ public class App {
 		String[] d2FinalStates = d2.get(d2TransEnd + 2).strip().split("\\s+");
 		
 		
+		DFA D1 = new DFA(d1States, d1Alphabet, d1Transitions, d1StartState, d1FinalStates);
+		
+		
+		
 		int numOfArgs = 3;
 		
 		switch(args[0]) {
 			case "-c":
 				numOfArgs = 2;
-				if(check(numOfArgs,args.length)) return;
-				System.out.println("complement");
+				if(check(numOfArgs,args.length)) break;
+				Complement.calcComplement(D1);
 				break;
 			case "-i":
 				if(check(numOfArgs,args.length)) return;
@@ -127,69 +137,17 @@ public class App {
 			
 			default:
 				System.out.println("Unrecognised function " + args[0] + "\nPlease choose one of -c Complement, -i Intersection, -s Symmetric Difference, -n Non-Emptyness, -e Equivalence");
-			
 		}
-		
-		
-//		System.out.println("D1 States: ");
-//		for(String i : d1States) System.out.println(i);
-//		
-//		System.out.println("=======================================");
-//		
-//		System.out.println("D1 Alphabet: ");
-//		for(String i : d1Alphabet) System.out.println(i);
-//				
-//		System.out.println("=======================================");
-//		
-//		System.out.println("D1 Transitions:");
-//		for(String i : d1States) {
-//			
-//			for(String b : d1Transitions.get(i)) System.out.print(b);
-//			System.out.println();
-//		}
-//		
-//		
-//		System.out.println("=======================================");
-//		
-//		System.out.println("D1 Start State: " + d1StartState);
-//		
-//		
-//		System.out.println("=======================================");
-//		
-//		System.out.println("D1 End State(s):");
-//		for(String i : d1FinalStates) System.out.println(i);
-//		
-//		System.out.println("=======================================");
-//		
-//		System.out.println("D2 States: ");
-//		for(String i : d2States) System.out.println(i);
-//		
-//		System.out.println("=======================================");
-//		System.out.println("D2 Alphabet: ");
-//		for(String i : d2Alphabet) System.out.println(i);
-//		System.out.println("=======================================");
-//		System.out.println("D2 Transitions:");
-//		for(String i : d2States) {
-//			
-//			for(String b : d2Transitions.get(i)) System.out.print(b);
-//			System.out.println();
-//		}
-//		System.out.println("=======================================");
-//		System.out.println("D2 Start State: " + d2StartState);
-//		System.out.println("=======================================");
-//		System.out.println("D2 Final State(s)");
-//		for(String i : d2FinalStates) System.out.println(i);
-		
-	}
+		}
 	
 	public static boolean check(int n, int a) {
 		if(n != a) {
 			System.out.println("Invalid Input! Please choose one of -c Complement, -i Intersection, -s Symmetric Difference, -n Non-Emptyness, -e Equivalence. Followed by one or more txt filenames");
 			System.out.println("E.g. java App -Functionletter file.txt file2.txt");
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 
