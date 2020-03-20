@@ -4,6 +4,8 @@ import java.util.Arrays;
 public class Complement {
 	public static void calcComplement(DFA d1) {
 		
+		//Complement: Non-accept states become accept and vice versa
+		
 		ArrayList<String> fStates = new ArrayList<String>();
 		
 		for(String i : d1.getStates()) {

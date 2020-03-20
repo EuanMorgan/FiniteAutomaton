@@ -11,16 +11,25 @@ public class App {
 		
 		//This is the main app file, it reads in the input and passes it to the relevant program
 		
+		if(args.length == 0) {
+			System.out.println("Invalid Input\nPlease specify a function (-c Complement, -i Intersection, -s Symmetric Difference, -n Non-Emptyness, -e Equivalence) Followed by one or more txt filenames");
+			return;
+		}
 		
-		
-		
-		
+		if(args.length == 1) {
+			System.out.println("Please specify filename(s)");
+			return;
+		}
 		String filename = args[1];
 		String filename2;
+		
+		
+		
 		if(args.length == 2) {
 			filename2 = args[1];
 		}else {
 			filename2 = args[2];
+			
 		}
 		
 		File file = new File(filename);
@@ -107,7 +116,7 @@ public class App {
 		
 		DFA D1 = new DFA(d1States, d1Alphabet, d1Transitions, d1StartState, d1FinalStates);
 		
-		
+		DFA D2 = new DFA(d2States,d2Alphabet,d2Transitions,d2StartState,d2FinalStates);
 		
 		int numOfArgs = 3;
 		
@@ -119,7 +128,7 @@ public class App {
 				break;
 			case "-i":
 				if(check(numOfArgs,args.length)) return;
-				System.out.println("Intersection");
+				Intersection.calcIntersection(D1, D2);
 				break;
 			case "-s":
 				if(check(numOfArgs,args.length)) return;
