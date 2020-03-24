@@ -132,7 +132,7 @@ public class App {
 				break;
 			case "-s":
 				if(check(numOfArgs,args.length)) return;
-				System.out.println("Symmetric Difference");
+				SymmDiff.calcDiff(D1, D2);
 				break;
 			case "-n":
 				numOfArgs = 2;

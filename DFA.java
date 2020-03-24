@@ -80,6 +80,8 @@ public class DFA {
 		System.out.println(getFinalStates().length);
 		for(String i : getFinalStates()) System.out.print(i + " ");
 		System.out.println();
+		
+		
 	}
 	
 	

@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Intersection {
-	public static void calcIntersection(DFA d1, DFA d2) {
-		
 	
+	private static boolean print = true;
+	
+	public static DFA calcIntersection(DFA d1, DFA d2) {
 		
 		
-
 		
 		ArrayList<String> states = new ArrayList<String>();
 		
@@ -96,7 +96,15 @@ public class Intersection {
 		
 		DFA D3 = new DFA(newFStates,alphabet,transitions,startState,newFinalStates);
 		
-		D3.printAll();
+		if(print)D3.printAll();
+		
+		
+		return D3;
 	
+	}
+	
+	public static DFA calcIntersectionNoPrint(DFA d1, DFA d2) {
+		print = false;
+		return calcIntersection(d1,d2);
 	}
 }

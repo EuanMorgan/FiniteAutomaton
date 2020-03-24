@@ -2,7 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Complement {
-	public static void calcComplement(DFA d1) {
+	
+	private static boolean print = true;
+	
+	public static DFA calcComplement(DFA d1) {
 		
 		//Complement: Non-accept states become accept and vice versa
 		
@@ -23,7 +26,14 @@ public class Complement {
 		d1.setFinalStates(newFStates);
 		
 		
+		if(print==true) d1.printAll();
 		
-		d1.printAll();
+		
+		return d1;
+	}
+	
+	public static DFA calcComplementNoPrint(DFA d1) {
+		print = false;
+		return calcComplement(d1);
 	}
 }
