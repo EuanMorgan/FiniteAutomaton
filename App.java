@@ -137,7 +137,7 @@ public class App {
 			case "-n":
 				numOfArgs = 2;
 				if(check(numOfArgs,args.length)) return;
-				System.out.println("Non-emptyness");
+				Nonempty.calcNonEmptyness(D1);
 				break;
 			case "-e":
 				if(check(numOfArgs,args.length)) return;
