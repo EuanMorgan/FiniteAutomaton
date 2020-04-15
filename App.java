@@ -141,7 +141,7 @@ public class App {
 				break;
 			case "-e":
 				if(check(numOfArgs,args.length)) return;
-				System.out.println("Equivalence");
+				Equivalence.calcEquivalence(D1, D2);
 				break;
 			
 			default:

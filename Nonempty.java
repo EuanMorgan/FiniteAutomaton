@@ -4,7 +4,8 @@ public class Nonempty {
 	private static Stack<String> path  = new Stack<String>();
 	private static Set<String> onPath  = new HashSet<String>();
 	private static boolean done = false;
-	public static void calcNonEmptyness(DFA d1) {
+	public static boolean print = true;
+	public static boolean calcNonEmptyness(DFA d1) {
 		Map<String, String[]> t = d1.getTransitions();
 		String[] s = d1.getStates();
 		String ss = d1.getStartState();
@@ -17,6 +18,18 @@ public class Nonempty {
 		ArrayList<String> toSearch = new ArrayList<String>();
 		ArrayList<String> searched = new ArrayList<String>();
 		
+		
+		//Calculate if we can get to accept state from start state with one move
+		
+		for(String u : fs) {
+			if(u.equals(ss)) {
+				System.out.println("language non-empty e accepted");
+				return true;
+			}
+			
+		}
+		
+		
 		for(String i : d1.getTransitions().get(ss)) {
 			
 			toSearch.add(i);
@@ -25,8 +38,8 @@ public class Nonempty {
 				
 				if(i.equals(j)) {
 					
-					System.out.println("language non-empty " + alphabet[count] + " accepted");
-					return;
+					if(print)System.out.println("language non-empty " + alphabet[count] + " accepted");
+					return false;
 				}
 			}
 			
@@ -36,28 +49,37 @@ public class Nonempty {
 		
 		
 		for(int i = 0; i < fs.length; i++) {
+
 			search(d1, ss, fs[i]);
 			language.clear();
+
+			if(done) return false;
 		}
 		
 		
-		System.out.println("language empty");
+		if(print)System.out.println("language empty");
+		return true;
 		
 	}
 	
 	static ArrayList<String> language = new ArrayList<String>();
 	static ArrayList<String> n = new ArrayList<String>();
+	public static int zzz = 0;
 	public static void search(DFA d1, String Start, String End) {
-		
+
 		if(done)return;
 		
 		path.push(Start);
 		onPath.add(Start);
 		
 		String[] alphabet = {"a","b"};
+		try {
+			
+		
 		if(Start.equals(End)) {
+			
 			if(language.size() > 0) {
-				System.out.println("language non-empty " + language + " accepted");
+				if(print)System.out.println("language non-empty " + language + " accepted");
 				done=true;
 				return;
 			}else {
@@ -91,9 +113,15 @@ public class Nonempty {
 			}
 			
 		}
-		
+		}catch(Exception e){}
+
 		path.pop();
 		onPath.remove(Start);
+	}
+	
+	public static boolean calcNonEmptynessNoPrint(DFA d1) {
+		print = false;
+		return calcNonEmptyness(d1);
 	}
 	
 }

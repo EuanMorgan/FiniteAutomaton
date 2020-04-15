@@ -19,6 +19,15 @@ public class DFA {
 		
 	}
 	
+	public DFA(DFA d1) {
+		//Copy constructor, used in symmetric difference to create copy of DFA to save original value
+		states = d1.states;
+		alphabet = d1.alphabet;
+		transitions = d1.transitions;
+		startState = d1.startState;
+		finalStates = d1.finalStates;
+	}
+
 	public void setStates(String[] s) {
 		states = s;
 	}

@@ -33,6 +33,8 @@ public class Complement {
 	}
 	
 	public static DFA calcComplementNoPrint(DFA d1) {
+		//The NoPrint methods are used when we don't want to print out the value to the screen
+		//i.e. when the method is needed as part of another method, and not as a final result
 		print = false;
 		return calcComplement(d1);
 	}
