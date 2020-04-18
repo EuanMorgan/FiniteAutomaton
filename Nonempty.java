@@ -20,6 +20,16 @@ public class Nonempty {
 		
 		List<String> alphabet = Arrays.asList(d1.getAlphabet());
 		
+		
+		//sanity check
+		
+		if(destinations == null || destinations.length == 0) {
+		
+			if(print)System.out.println("language empty");
+			return;
+		}
+		
+		
 		search(start,destinations,adjacent,states, visited, string, alphabet);
 		
 		if(!pathFound) {
@@ -31,7 +41,7 @@ public class Nonempty {
 	public static boolean dfsNoPrint(DFA d1) {
 		print = false;
 		dfs(d1);
-		
+		System.out.println("PATH FOUND = " + pathFound);
 		if(pathFound) {
 			return true;
 		}else {
@@ -42,7 +52,7 @@ public class Nonempty {
 	
 	public static void search(String current, String[] destinations, Map<String, String[]> adjacent, String[] states, ArrayList<String> visited, Stack<String> string, List<String> alphabet) {
 		if(pathFound)return;
-		
+
 		//Standard DFS
 		//Add current item to visited list, if it is a final state return, else check adjacent paths and recurse.
 		
@@ -73,9 +83,13 @@ public class Nonempty {
 				string.push(alphabet.get(Arrays.asList(adjacent.get(current)).indexOf(dest))); 
 				search(dest,destinations,adjacent,states, visited, string, alphabet);
 			}
+			
+			
 		}
 		
 		string.clear();
+		
+		
 	}
 	
 }

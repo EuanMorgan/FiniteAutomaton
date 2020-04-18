@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SymmDiff {
 	public static boolean print = true;
@@ -21,34 +23,82 @@ public class SymmDiff {
 		DFA comp2 = Complement.calcComplementNoPrint(d2);
 		DFA IntD2 = Intersection.calcIntersectionNoPrint(initD1, comp2);
 		
-		
+	
 		
 		//Final part of result
 		//a u b
 		//Calculated by taking intersection and then modifying the final states
 		//Such that the set of all final states F* = set of all states (r,s)
 		//such that r is a final state of IntD1 OR s is a final state of IntD2
-		DFA union = Intersection.calcIntersectionNoPrint(comp, comp2);
+		DFA union = Intersection.calcIntersectionNoPrint(IntD1, IntD2);
 		
-		String[] newFStates = new String[IntD1.getFinalStates().length + IntD2.getFinalStates().length];
-		
-		int i = 0;
-		for(String s : IntD1.getFinalStates()) {
-			newFStates[i] = s;
-			i++;
-		}
-		
-		
-		
-		for(String s : IntD2.getFinalStates()) {
-			newFStates[i] = s;
-			i++;
-		}
+		ArrayList<String> newFStates = new ArrayList<String>();
 		
 
 		
-		union.setFinalStates(newFStates);
+//		if(!(IntD1.getFinalStates() == null)) {
+			for(String s : union.getStates()) {
+				
+				for(String f : IntD1.getFinalStates()) {
+					if(s.contains(f)) {
+						boolean found = false;
+						for(String d : newFStates) {
+							
+							char tempArray[] = s.toCharArray();
+							Arrays.sort(tempArray);
+							if(s.equals(d)) {
+								found = true;
+							}
+						
+							
+						}
+						
+						if(found) {
+							newFStates.add(s);
+						}
+					}
+				}
+				
 		
+			}
+//		}
+		
+		
+		if(!(IntD2.getFinalStates()==null)) {
+			for(String s : union.getStates()) {
+				
+				for(String f : IntD2.getFinalStates()) {
+				
+					if(s.contains(f)) {
+						boolean found = false;
+						for(String d : newFStates) {
+							
+							char tempArray[] = s.toCharArray();
+							Arrays.sort(tempArray);
+							if(s.equals(d)) {
+								found = true;
+							}
+						
+							
+						}
+						
+						if(!found) {
+							newFStates.add(s);
+						}
+						
+						
+					
+						
+					}
+				}
+			}
+		}
+
+		
+
+		
+		union.setFinalStates(newFStates.toArray(new String[newFStates.size()]));
+
 		if(print)union.printAll();
 		
 		return union;

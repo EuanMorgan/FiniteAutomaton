@@ -86,9 +86,14 @@ public class DFA {
 		System.out.println(getStartState());
 		
 		
-		System.out.println(getFinalStates().length);
-		for(String i : getFinalStates()) System.out.print(i + " ");
-		System.out.println();
+		if(getFinalStates() != null) {
+			System.out.println(getFinalStates().length);
+			for(String i : getFinalStates()) System.out.print(i + " ");
+			System.out.println();
+		}else {
+			System.out.println(0);
+		}
+		
 		
 		
 	}

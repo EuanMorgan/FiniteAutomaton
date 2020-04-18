@@ -11,19 +11,27 @@ public class Complement {
 		
 		ArrayList<String> fStates = new ArrayList<String>();
 		
-		for(String i : d1.getStates()) {
+		
+		if(!(d1.getFinalStates() == null)) {
+		
+			for(String i : d1.getStates()) {
 			
 				if(!Arrays.asList(d1.getFinalStates()).contains(i)) {
 					fStates.add(i);
 				}
-			
+			}
 		}
 		
 		String[] newFStates = new String[fStates.size()];
 		
 		newFStates = fStates.toArray(newFStates);
 		
-		d1.setFinalStates(newFStates);
+		if(d1.getFinalStates() != null) {
+			d1.setFinalStates(newFStates);
+		}else {
+			d1.setFinalStates(d1.getStates());
+		}
+		
 		
 		
 		if(print) d1.printAll();

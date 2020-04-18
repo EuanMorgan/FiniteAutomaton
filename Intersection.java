@@ -12,13 +12,14 @@ public class Intersection {
 		
 		ArrayList<String> states = new ArrayList<String>();
 		
-		String[] alphabet = {"a","b"};
+		String[] alphabet = d1.getAlphabet();
 		
 		
 		
 		for(String s : d1.getStates()) {
 			for(String s2 : d2.getStates()) {
 				states.add(s+s2);
+
 			}
 		}
 		
@@ -26,11 +27,20 @@ public class Intersection {
 		
 		ArrayList<String> finalStates = new ArrayList<String>();
 		
-		for(String s : d1.getFinalStates()) {
-			for(String s2 : d2.getFinalStates()) {
-				finalStates.add(s+s2);
+
+		
+		
+		if(!(d1.getFinalStates() == null || d2.getFinalStates() == null)) {
+			
+			
+			for(String s : d1.getFinalStates()) {
+				for(String s2 : d2.getFinalStates()) {
+					finalStates.add(s+s2);
+				}
 			}
 		}
+		
+		
 		
 		
 		ArrayList<String> temptrans = new ArrayList<String>();
@@ -93,6 +103,12 @@ public class Intersection {
 		String[] newFinalStates = new String[finalStates.size()];
 		
 		newFinalStates = finalStates.toArray(newFinalStates);
+		
+		if(d1.getFinalStates() == null || d2.getFinalStates() == null) {
+			newFinalStates = null;
+		}
+		
+		
 		
 		DFA D3 = new DFA(newFStates,alphabet,transitions,startState,newFinalStates);
 		

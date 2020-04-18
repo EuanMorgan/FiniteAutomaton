@@ -96,7 +96,15 @@ public class App {
 		
 		String d1StartState = d1.get(d1TransEnd);
 		
-		String[] d1FinalStates = d1.get(d1TransEnd + 2).strip().split("\\s+");
+		
+		String[] d1FinalStates;
+		
+		try {
+			d1FinalStates = d1.get(d1TransEnd + 2).strip().split("\\s+");
+		}catch(Exception e) {
+			d1FinalStates = null;
+		}
+		
 		
 		
 		
@@ -111,12 +119,23 @@ public class App {
 		
 		String d2StartState = d2.get(d2TransEnd);
 		
-		String[] d2FinalStates = d2.get(d2TransEnd + 2).strip().split("\\s+");
+		String[] d2FinalStates;
+		
+		try {
+			d2FinalStates = d2.get(d2TransEnd + 2).strip().split("\\s+");
+		}catch(Exception error) {
+			d2FinalStates = null;
+		}
+		
+		
+		
 		
 		
 		DFA D1 = new DFA(d1States, d1Alphabet, d1Transitions, d1StartState, d1FinalStates);
 		
 		DFA D2 = new DFA(d2States,d2Alphabet,d2Transitions,d2StartState,d2FinalStates);
+		
+		
 		
 		int numOfArgs = 3;
 		
