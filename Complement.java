@@ -26,7 +26,7 @@ public class Complement {
 		d1.setFinalStates(newFStates);
 		
 		
-		if(print==true) d1.printAll();
+		if(print) d1.printAll();
 		
 		
 		return d1;

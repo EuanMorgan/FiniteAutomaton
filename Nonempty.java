@@ -1,127 +1,81 @@
 import java.util.*;
 
 public class Nonempty {
-	private static Stack<String> path  = new Stack<String>();
-	private static Set<String> onPath  = new HashSet<String>();
-	private static boolean done = false;
+	
+	public static boolean pathFound = false;
+	
 	public static boolean print = true;
-	public static boolean calcNonEmptyness(DFA d1) {
-		Map<String, String[]> t = d1.getTransitions();
-		String[] s = d1.getStates();
-		String ss = d1.getStartState();
-		String[] fs = d1.getFinalStates();
+	
+	
+	public static void dfs(DFA d1) {
 		
-		String[] alphabet = {"a","b"};
+		String start = d1.getStartState();
+		String[] destinations = d1.getFinalStates();
+		Map<String, String[]> adjacent = d1.getTransitions();
+		String[] states = d1.getStates();
 		
-		int count = 0;
+		ArrayList<String> visited = new ArrayList<String>();
 		
-		ArrayList<String> toSearch = new ArrayList<String>();
-		ArrayList<String> searched = new ArrayList<String>();
+		Stack<String> string = new Stack<String>();
 		
+		List<String> alphabet = Arrays.asList(d1.getAlphabet());
 		
-		//Calculate if we can get to accept state from start state with one move
+		search(start,destinations,adjacent,states, visited, string, alphabet);
 		
-		for(String u : fs) {
-			if(u.equals(ss)) {
-				System.out.println("language non-empty e accepted");
-				return true;
-			}
-			
+		if(!pathFound) {
+			if(print)System.out.println("language empty");
 		}
-		
-		
-		for(String i : d1.getTransitions().get(ss)) {
-			
-			toSearch.add(i);
-			
-			for(String j : fs) {
-				
-				if(i.equals(j)) {
-					
-					if(print)System.out.println("language non-empty " + alphabet[count] + " accepted");
-					return false;
-				}
-			}
-			
-			count++;
-		}
-		count = 0;		
-		
-		
-		for(int i = 0; i < fs.length; i++) {
-
-			search(d1, ss, fs[i]);
-			language.clear();
-
-			if(done) return false;
-		}
-		
-		
-		if(print)System.out.println("language empty");
-		return true;
 		
 	}
 	
-	static ArrayList<String> language = new ArrayList<String>();
-	static ArrayList<String> n = new ArrayList<String>();
-	public static int zzz = 0;
-	public static void search(DFA d1, String Start, String End) {
-
-		if(done)return;
-		
-		path.push(Start);
-		onPath.add(Start);
-		
-		String[] alphabet = {"a","b"};
-		try {
-			
-		
-		if(Start.equals(End)) {
-			
-			if(language.size() > 0) {
-				if(print)System.out.println("language non-empty " + language + " accepted");
-				done=true;
-				return;
-			}else {
-				int count = 0;
-				for(String w : d1.getTransitions().get(Start)) {
-			
-					if(!onPath.contains(w) || w.equals(d1.getStartState())) {
-						
-						language.add(alphabet[count]);
-				
-						
-						search(d1,w,End);
-						}
-					count++;
-				}
-			}
-			
-		}else {
-		
-			int count = 0;
-			for(String w : d1.getTransitions().get(Start)) {
-
-				if(!onPath.contains(w) || w.equals(d1.getStartState())) {
-					
-					language.add(alphabet[count]);
-
-					
-					search(d1,w,End);
-					}
-				count++;
-			}
-			
-		}
-		}catch(Exception e){}
-
-		path.pop();
-		onPath.remove(Start);
-	}
-	
-	public static boolean calcNonEmptynessNoPrint(DFA d1) {
+	public static boolean dfsNoPrint(DFA d1) {
 		print = false;
-		return calcNonEmptyness(d1);
+		dfs(d1);
+		
+		if(pathFound) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
+	public static void search(String current, String[] destinations, Map<String, String[]> adjacent, String[] states, ArrayList<String> visited, Stack<String> string, List<String> alphabet) {
+		if(pathFound)return;
+		
+		//Standard DFS
+		//Add current item to visited list, if it is a final state return, else check adjacent paths and recurse.
+		
+		
+		if(Arrays.asList(destinations).contains(current)) {
+			if(print)System.out.print("language non-empty - ");
+			if(string.size() == 0) {
+				if(print)System.out.println("e accepted");
+			}else {
+				if(print)for(String s : string) System.out.print(s);
+				if(print)System.out.println(" accepted");
+			}
+			
+			
+			pathFound=true;
+			return;
+		}
+		
+
+		
+		visited.add(current);
+		for(String dest : adjacent.get(current)) {
+
+			if(!visited.contains(dest)) {
+
+				//push the new symbol to the stack, we use the index instead of hardcoding in case the input alphabet is b,a instead of a,b
+				//recursion to continue searching
+				string.push(alphabet.get(Arrays.asList(adjacent.get(current)).indexOf(dest))); 
+				search(dest,destinations,adjacent,states, visited, string, alphabet);
+			}
+		}
+		
+		string.clear();
 	}
 	
 }

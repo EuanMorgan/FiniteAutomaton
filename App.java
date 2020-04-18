@@ -122,25 +122,35 @@ public class App {
 		
 		switch(args[0]) {
 			case "-c":
+				
 				numOfArgs = 2;
 				if(check(numOfArgs,args.length)) break;
+				System.out.println(">> calculating complement of " + filename + "\n");
 				Complement.calcComplement(D1);
 				break;
 			case "-i":
+				
 				if(check(numOfArgs,args.length)) return;
+				System.out.println(">> calculating intersection of " + filename + " with " + filename2 + "\n");
 				Intersection.calcIntersection(D1, D2);
 				break;
 			case "-s":
+				
 				if(check(numOfArgs,args.length)) return;
+				System.out.println(">> calculating symmetric difference between " + filename + " and " + filename2 + "\n");
 				SymmDiff.calcDiff(D1, D2);
 				break;
 			case "-n":
+				
 				numOfArgs = 2;
 				if(check(numOfArgs,args.length)) return;
-				Nonempty.calcNonEmptyness(D1);
+				System.out.println(">> calculating non-emptiness of " + filename + "\n");
+				Nonempty.dfs(D1);
 				break;
 			case "-e":
+				
 				if(check(numOfArgs,args.length)) return;
+				System.out.println(">> calculating equivalence of " + filename + " and " + filename2 + "\n");
 				Equivalence.calcEquivalence(D1, D2);
 				break;
 			
