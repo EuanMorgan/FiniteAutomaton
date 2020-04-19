@@ -10,9 +10,9 @@ public class Nonempty {
 	public static void dfs(DFA d1) {
 		
 		String start = d1.getStartState();
-		String[] destinations = d1.getFinalStates();
-		Map<String, String[]> adjacent = d1.getTransitions();
-		String[] states = d1.getStates();
+		ArrayList<String> destinations = d1.getFinalStates();
+		Map<String, Map<String, String>> adjacent = d1.getTransitions();
+		ArrayList<String> states = d1.getStates();
 		
 		ArrayList<String> visited = new ArrayList<String>();
 		
@@ -40,14 +40,14 @@ public class Nonempty {
 		
 	}
 	
-	public static void search(String current, String[] destinations, Map<String, String[]> adjacent, String[] states, ArrayList<String> visited, Stack<String> string, List<String> alphabet) {
+	public static void search(String current, ArrayList<String> destinations, Map<String, Map<String, String>> adjacent, ArrayList<String> states, ArrayList<String> visited, Stack<String> string, List<String> alphabet) {
 		if(pathFound)return;
 		
 		//Standard DFS
 		//Add current item to visited list, if it is a final state return, else check adjacent paths and recurse.
 		
 		
-		if(Arrays.asList(destinations).contains(current)) {
+		if(destinations.contains(current)) {
 			if(print)System.out.print("language non-empty - ");
 			if(string.size() == 0) {
 				if(print)System.out.println("e accepted");
@@ -64,16 +64,25 @@ public class Nonempty {
 
 		
 		visited.add(current);
-		for(String dest : adjacent.get(current)) {
-
-			if(!visited.contains(dest)) {
-
-				//push the new symbol to the stack, we use the index instead of hardcoding in case the input alphabet is b,a instead of a,b
-				//recursion to continue searching
-				string.push(alphabet.get(Arrays.asList(adjacent.get(current)).indexOf(dest))); 
-				search(dest,destinations,adjacent,states, visited, string, alphabet);
+		
+	
+			for(String alpha : alphabet) {
+				
+				if(!visited.contains(adjacent.get(current).get(alpha))) {
+	
+					String destination = adjacent.get(current).get(alpha);
+					//push the new symbol to the stack, we use the index instead of hardcoding in case the input alphabet is b,a instead of a,b
+					//recursion to continue searching
+					string.push(alpha); 
+					search(destination,destinations,adjacent,states, visited, string, alphabet);
+				}
 			}
-		}
+		
+		
+
+
+			
+		
 		
 		string.clear();
 	}
