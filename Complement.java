@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Arrays;
 
 public class Complement {
@@ -10,20 +10,24 @@ public class Complement {
 		//Complement: Non-accept states become accept and vice versa
 		
 		ArrayList<String> fStates = new ArrayList<String>();
-		
-		for(String i : d1.getStates()) {
-			
-				if(!Arrays.asList(d1.getFinalStates()).contains(i)) {
+		if(d1.getFinalStates().size() != 0) {
+			for(String i : d1.getStates()) {
+				
+				if(!d1.getFinalStates().contains(i)) {
 					fStates.add(i);
 				}
 			
 		}
+		}
 		
-		String[] newFStates = new String[fStates.size()];
+		//S = set of states and F = set of final states.
+		//If = {}, then Complement(F) = S;
+		if(d1.getFinalStates().size() != 0) {
+			d1.setFinalStates(fStates);
+		}else {
+			d1.setFinalStates(d1.getStates());
+		}
 		
-		newFStates = fStates.toArray(newFStates);
-		
-		d1.setFinalStates(newFStates);
 		
 		
 		if(print) d1.printAll();

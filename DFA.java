@@ -1,16 +1,17 @@
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DFA {
-	private String[] states;
+	private ArrayList<String> states;
 	private String[] alphabet;
 	
-	private Map<String, String[]> transitions;
+	private Map<String, Map<String, String>> transitions;
 	
 	private String startState;
 	
-	private String[] finalStates;
+	private ArrayList<String> finalStates;
 	
-	public DFA(String[] s, String[] a, Map<String,String[]> t, String ss, String[] fs) {
+	public DFA(ArrayList<String> s, String[] a, Map<String,Map<String,String>> t, String ss, ArrayList<String> fs) {
 		states = s;
 		alphabet = a;
 		transitions = t;
@@ -28,7 +29,7 @@ public class DFA {
 		finalStates = d1.finalStates;
 	}
 
-	public void setStates(String[] s) {
+	public void setStates(ArrayList<String> s) {
 		states = s;
 	}
 	
@@ -36,7 +37,7 @@ public class DFA {
 		alphabet = a;
 	}
 	
-	public void setTransitions(Map<String, String[]> t) {
+	public void setTransitions(Map<String, Map<String, String>> t) {
 		transitions = t;
 	}
 	
@@ -44,11 +45,11 @@ public class DFA {
 		startState = s;
 	}
 	
-	public void setFinalStates(String[] f) {
+	public void setFinalStates(ArrayList<String> f) {
 		finalStates = f;
 	}
 	
-	public String[] getStates() {
+	public ArrayList<String> getStates() {
 		return states;
 	}
 	
@@ -56,7 +57,7 @@ public class DFA {
 		return alphabet;
 	}
 	
-	public Map<String, String[]> getTransitions(){
+	public Map<String, Map<String, String>> getTransitions(){
 		return transitions;
 	}
 	
@@ -64,12 +65,12 @@ public class DFA {
 		return startState;
 	}
 	
-	public String[] getFinalStates() {
+	public ArrayList<String> getFinalStates() {
 		return finalStates;
 	}
 	
 	public void printAll() {
-		System.out.println(getStates().length);
+		System.out.println(getStates().size());
 		for(String i : getStates()) System.out.print(i + " ");
 		System.out.println();
 		
@@ -79,16 +80,20 @@ public class DFA {
 		System.out.println();
 		for(String i : getStates()) {
 			
-			for(String b : getTransitions().get(i)) System.out.print(b + " ");
-			System.out.println();
+			System.out.print(getTransitions().get(i).get(getAlphabet()[0]) + " ");
+			System.out.println(getTransitions().get(i).get(getAlphabet()[1]));
 		}
 		
 		System.out.println(getStartState());
 		
+		if(getFinalStates().size() != 0) {
+			System.out.println(getFinalStates().size());
+			for(String i : getFinalStates()) System.out.print(i + " ");
+			System.out.println();
+		}else {
+			System.out.println(0);
+		}
 		
-		System.out.println(getFinalStates().length);
-		for(String i : getFinalStates()) System.out.print(i + " ");
-		System.out.println();
 		
 		
 	}

@@ -7,7 +7,7 @@ public class Equivalence {
 
 		
 		
-		if(Nonempty.dfsNoPrint(diff)) {
+		if(!Nonempty.dfsNoPrint(diff)) {
 			System.out.println("equivalent");
 		}else {
 			System.out.println("not equivalent");

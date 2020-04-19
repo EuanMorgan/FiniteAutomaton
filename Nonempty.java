@@ -29,7 +29,7 @@ public class Nonempty {
 	}
 	
 	public static boolean dfsNoPrint(DFA d1) {
-		print = false;
+		//print = false;
 		dfs(d1);
 		
 		if(pathFound) {
