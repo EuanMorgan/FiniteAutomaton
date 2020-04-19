@@ -69,7 +69,11 @@ public class SymmDiff {
 		}
 		
 		
-		union.setFinalStates(setFinalStates.toArray(new String[setFinalStates.size()]));
+		newFStates.clear();
+		newFStates.addAll(setFinalStates);
+		
+
+		union.setFinalStates(newFStates);
 
 		
 //		union.setFinalStates(newFStates);

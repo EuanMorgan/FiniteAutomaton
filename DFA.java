@@ -71,7 +71,7 @@ public class DFA {
 	
 	public void printAll() {
 		System.out.println(getStates().size());
-		for(String i : getStates()) System.out.print(i + " ");
+		for(String i : getStates()) System.out.print(i.replaceAll("\\s","") + " ");
 		System.out.println();
 		
 		
@@ -79,16 +79,17 @@ public class DFA {
 		for (String i : getAlphabet()) System.out.print(i + " ");
 		System.out.println();
 		for(String i : getStates()) {
-			
+
+			i = i.replaceAll("\\s","");
 			System.out.print(getTransitions().get(i).get(getAlphabet()[0]) + " ");
 			System.out.println(getTransitions().get(i).get(getAlphabet()[1]));
 		}
 		
-		System.out.println(getStartState());
+		System.out.println(getStartState().replaceAll("\\s",""));
 		
 		if(getFinalStates().size() != 0) {
 			System.out.println(getFinalStates().size());
-			for(String i : getFinalStates()) System.out.print(i + " ");
+			for(String i : getFinalStates()) System.out.print(i.replaceAll("\\s","") + " ");
 			System.out.println();
 		}else {
 			System.out.println(0);

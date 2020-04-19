@@ -19,7 +19,7 @@ public class Intersection {
 		
 		for(String s : d1.getStates()) {
 			for(String s2 : d2.getStates()) {
-				states.add(s+s2);
+				states.add(s.replaceAll("\\s","") + " "  + s2.replaceAll("\\s",""));
 			}
 		}
 		
@@ -29,20 +29,27 @@ public class Intersection {
 		
 		for(String s : d1.getFinalStates()) {
 			for(String s2 : d2.getFinalStates()) {
-				finalStates.add(s+s2);
+				finalStates.add(s.replaceAll("\\s","") + " " + s2.replaceAll("\\s",""));
 			}
 		}
 
 		Map<String,Map<String,String>> newTransitions = new HashMap<String,Map<String, String>>();
 		
 		//Output transitions
-		
+		//System.out.println(states);
 		for(String intStates : states) {
-			newTransitions.put(intStates, new HashMap<String,String>());
-			for(String alpha : alphabet) {				
-				newTransitions.get(intStates).put(alpha, d1.getTransitions().get(intStates.substring(0, 1)).get(alpha) + d2.getTransitions().get(intStates.substring(1, 2)).get(alpha));
+
+			newTransitions.put(intStates.replaceAll("\\s",""), new HashMap<String,String>());
+			for(String alpha : alphabet) {
+				
+				newTransitions.get(intStates.replaceAll("\\s","")).put(alpha, d1.getTransitions().get(intStates.split(" ")[0]).get(alpha) + d2.getTransitions().get(intStates.split(" ")[1]).get(alpha));
 			}
+			
+			//System.out.println(newTransitions);
+			
 		}
+		
+		
 		
 		DFA D3 = new DFA(states,alphabet,newTransitions,startState,finalStates);
 		
