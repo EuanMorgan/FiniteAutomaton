@@ -10,7 +10,9 @@ public class Nonempty {
 	public static void dfs(DFA d1) {
 		
 		String start = d1.getStartState();
-		ArrayList<String> destinations = d1.getFinalStates();
+		ArrayList<String> tmpDests = d1.getFinalStates();
+		ArrayList<String> destinations = new ArrayList<String>();
+		for(String s : tmpDests)destinations.add(s.replaceAll("\\s",""));
 		Map<String, Map<String, String>> adjacent = d1.getTransitions();
 		ArrayList<String> states = d1.getStates();
 		
@@ -19,6 +21,9 @@ public class Nonempty {
 		Stack<String> string = new Stack<String>();
 		
 		List<String> alphabet = Arrays.asList(d1.getAlphabet());
+		
+		
+		
 		
 		search(start,destinations,adjacent,states, visited, string, alphabet);
 		
@@ -29,7 +34,7 @@ public class Nonempty {
 	}
 	
 	public static boolean dfsNoPrint(DFA d1) {
-		//print = false;
+		print = false;
 		dfs(d1);
 		
 		if(pathFound) {
@@ -63,14 +68,13 @@ public class Nonempty {
 		
 
 		
-		visited.add(current);
-		
+		visited.add(current.replaceAll("\\s",""));
 	
 			for(String alpha : alphabet) {
-				
-				if(!visited.contains(adjacent.get(current).get(alpha))) {
+		
+				if(!visited.contains(adjacent.get(current.replaceAll("\\s","")).get(alpha))) {
 	
-					String destination = adjacent.get(current).get(alpha);
+					String destination = adjacent.get(current.replaceAll("\\s","")).get(alpha);
 					//push the new symbol to the stack, we use the index instead of hardcoding in case the input alphabet is b,a instead of a,b
 					//recursion to continue searching
 					string.push(alpha); 

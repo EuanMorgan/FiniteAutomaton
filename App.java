@@ -77,10 +77,16 @@ public class App {
 		
 		String[] d1Alphabet;
 		d1Alphabet = d1.get(3).strip().split("\\s+");
-		
+	
 		String[] d2Alphabet;
 		d2Alphabet = d2.get(3).strip().split("\\s+");
 		
+//		String[] d1Alphabet = new String[2];
+//		String[] d2Alphabet = new String[2];
+//		
+//		for(int i = 0; i < tmpAlpha.length; i++) {
+//			
+//		}
 		
 		
 		//Transition function lines = num of states
@@ -157,21 +163,12 @@ public class App {
 				
 				//Check if arrays use same language (sort them in case of a,b and b,a)
 				//Unnecessary but just in case
-				String[] temp = D1.getAlphabet().clone();
-				String[] temp2 = D2.getAlphabet().clone();
-				Arrays.sort(temp);
-				Arrays.sort(temp2);
-	
-				
-				if(!Arrays.equals(temp, temp2)) {
-					System.out.println("Warning, the DFA's must use the same language!");
-					return;
-				}
+				if(checkAlpha(D1.getAlphabet(),D2.getAlphabet()))return;
 				System.out.println(">> calculating intersection of " + filename + " with " + filename2 + "\n");
 				Intersection.calcIntersection(D1, D2);
 				break;
 			case "-s":
-				
+				if(checkAlpha(D1.getAlphabet(), D2.getAlphabet()))return;
 				if(check(numOfArgs,args.length)) return;
 				System.out.println(">> calculating symmetric difference between " + filename + " and " + filename2 + "\n");
 				SymmDiff.calcDiff(D1, D2);
@@ -184,7 +181,7 @@ public class App {
 				Nonempty.dfs(D1);
 				break;
 			case "-e":
-				
+				if(checkAlpha(D1.getAlphabet(), D2.getAlphabet()))return;
 				if(check(numOfArgs,args.length)) return;
 				System.out.println(">> calculating equivalence of " + filename + " and " + filename2 + "\n");
 				Equivalence.calcEquivalence(D1, D2);
@@ -199,6 +196,21 @@ public class App {
 		if(n != a) {
 			System.out.println("Invalid Input! Please choose one of -c Complement, -i Intersection, -s Symmetric Difference, -n Non-Emptyness, -e Equivalence. Followed by one or more txt filenames");
 			System.out.println("E.g. java App -Functionletter file.txt file2.txt");
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean checkAlpha(String[] a, String[] b) {
+		String[] temp = a.clone();
+		String[] temp2 = b.clone();
+		Arrays.sort(temp);
+		Arrays.sort(temp2);
+	
+		
+		if(!Arrays.equals(temp, temp2)) {
+			System.out.println("Warning, the DFA's must use the same alphabet!");
 			return true;
 		}
 		

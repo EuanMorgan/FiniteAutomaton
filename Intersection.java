@@ -23,7 +23,7 @@ public class Intersection {
 			}
 		}
 		
-		String startState = states.get(0);
+		String startState = d1.getStartState() + " " + d2.getStartState();
 		
 		ArrayList<String> finalStates = new ArrayList<String>();
 		
