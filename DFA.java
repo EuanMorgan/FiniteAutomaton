@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class DFA {
+	
+	//Getters and setters for DFA details and has a function to print them all out
+	
 	private ArrayList<String> states;
 	private String[] alphabet;
 	
@@ -94,12 +97,7 @@ public class DFA {
 		}else {
 			System.out.println(0);
 		}
-		
-		
-		
+			
 	}
-	
-	
-	
 	
 }

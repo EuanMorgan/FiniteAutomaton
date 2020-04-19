@@ -2,7 +2,6 @@ import java.util.*;
 import java.util.Arrays;
 
 public class Complement {
-	
 	private static boolean print = true;
 	
 	public static DFA calcComplement(DFA d1) {
@@ -28,11 +27,8 @@ public class Complement {
 			d1.setFinalStates(d1.getStates());
 		}
 		
-		
-		
 		if(print) d1.printAll();
-		
-		
+
 		return d1;
 	}
 	

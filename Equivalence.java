@@ -1,6 +1,6 @@
 
 public class Equivalence {
-	//If symmetric difference is empty then they equivalent
+	//If symmetric difference is empty then they are equivalent
 	
 	public static void calcEquivalence(DFA d1, DFA d2) {
 		

@@ -9,6 +9,8 @@ public class Nonempty {
 	
 	public static void dfs(DFA d1) {
 		
+		
+		//Get relevant data and pass it to dfs function
 		String start = d1.getStartState();
 		ArrayList<String> tmpDests = d1.getFinalStates();
 		ArrayList<String> destinations = new ArrayList<String>();
@@ -21,9 +23,6 @@ public class Nonempty {
 		Stack<String> string = new Stack<String>();
 		
 		List<String> alphabet = Arrays.asList(d1.getAlphabet());
-		
-		
-		
 		
 		search(start,destinations,adjacent,states, visited, string, alphabet);
 		
@@ -48,11 +47,11 @@ public class Nonempty {
 	public static void search(String current, ArrayList<String> destinations, Map<String, Map<String, String>> adjacent, ArrayList<String> states, ArrayList<String> visited, Stack<String> string, List<String> alphabet) {
 		if(pathFound)return;
 		
-		//Standard DFS
+		//Normal DFS
 		//Add current item to visited list, if it is a final state return, else check adjacent paths and recurse.
 		
 		
-		if(destinations.contains(current)) {
+		if(destinations.contains(current)) { //If we are currently at an accept state then the language is non empty
 			if(print)System.out.print("language non-empty - ");
 			if(string.size() == 0) {
 				if(print)System.out.println("e accepted");

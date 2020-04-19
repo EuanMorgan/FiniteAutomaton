@@ -4,7 +4,10 @@ public class SymmDiff {
 	public static DFA calcDiff(DFA d1, DFA d2) {
 		
 		
-		//Create copy of original DFA's as they get changed when calculating complement
+		//(Comp(D1) n D2) u (D2 n Comp(D1))
+		
+		//Create copy of original DFAs as they get changed when calculating complement
+		//initD1 = initial dfa, not to be confused with IntD1 which is the result of the intersection
 		DFA initD1 = new DFA(d1);
 		DFA initD2 = new DFA(d2);
 		
@@ -20,30 +23,19 @@ public class SymmDiff {
 		//let b = (S n Complement(T))
 		DFA comp2 = Complement.calcComplementNoPrint(d2);
 		DFA IntD2 = Intersection.calcIntersectionNoPrint(initD1, comp2);
-		
-		
-		
+			
 		//Final part of result
 		//a u b
 		//Calculated by taking intersection and then modifying the final states
 		//Such that the set of all final states F* = set of all states (r,s)
-		//such that r is a final state of IntD1 OR s is a final state of IntD2
-
-		
-//		String[] newFStates = new String[IntD1.getFinalStates().length + IntD2.getFinalStates().length];
-//		
-//		IntD1.printAll();
-//		IntD2.printAll();
-	
+		//such that r is a final state of IntD1 OR s is a final state of IntD2	
 		
 		DFA union = Intersection.calcIntersection(IntD1, IntD2);
 
 		
 		ArrayList<String> newFStates = new ArrayList<String>();
 
-		
-		
-		//Iterate all states, check if the final state from either of the Intersected DFA's is present
+		//Get accept states of both intersections
 		//Final states are pairs (s,j) where s is a final state in DFA 1 or of DFA 2
 		for(String d1Accept : IntD1.getFinalStates()) {
 			for(String d2States : IntD2.getStates()) {
@@ -57,26 +49,17 @@ public class SymmDiff {
 			}
 		}
 		
-		
-		
-		
 		//Convert to set to get rid of unwanted values
-		
-		
-		Set<String> setFinalStates = new HashSet();
+		Set<String> setFinalStates = new HashSet<String>();
 		for(String s : newFStates) {
 			setFinalStates.add(s);
 		}
 		
-		
 		newFStates.clear();
 		newFStates.addAll(setFinalStates);
 		
-
 		union.setFinalStates(newFStates);
 
-		
-//		union.setFinalStates(newFStates);
 		
 		if(print)union.printAll();
 		
